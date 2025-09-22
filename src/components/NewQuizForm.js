@@ -11,6 +11,7 @@ export default function NewQuizForm() {
   const [name, setName] = useState("");
   const [cards, setCards] = useState([]);
   const [topicId, setTopicId] = useState("");
+  const [randomOrder, setRandomOrder] = useState(false); // 👈 new state
   const history = useHistory();
   const dispatch = useDispatch();
   const topics = useSelector(selectAllTopics);
@@ -38,7 +39,8 @@ export default function NewQuizForm() {
         id: quizId,
         name: name,
         topicId: topicId,
-        cardIds: cardIds
+        cardIds: cardIds,
+        randomOrder: randomOrder // 👈 save it in quiz
       })
     );
 
@@ -47,7 +49,16 @@ export default function NewQuizForm() {
 
   const addCardInputs = (e) => {
     e.preventDefault();
-    setCards(cards.concat({ front: "", back: "" }));
+    setCards(
+      cards.concat({
+        front: "",
+        back: "",
+        frontImage: "",
+        backImage: "",
+        frontImageFile: null,
+        backImageFile: null
+      })
+    );
   };
 
   const removeCard = (e, index) => {
@@ -55,10 +66,28 @@ export default function NewQuizForm() {
     setCards(cards.filter((card, i) => index !== i));
   };
 
-  const updateCardState = (index, side, value) => {
+  const updateCardState = (index, field, value) => {
     const newCards = cards.slice();
-    newCards[index][side] = value;
+    newCards[index][field] = value;
     setCards(newCards);
+  };
+
+  const handleFileUpload = (index, side, file) => {
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        updateCardState(index, `${side}Image`, e.target.result);
+        updateCardState(index, `${side}ImageFile`, file);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Please select a valid image file (JPG, PNG, GIF, etc.)");
+    }
+  };
+
+  const clearImage = (index, side) => {
+    updateCardState(index, `${side}Image`, "");
+    updateCardState(index, `${side}ImageFile`, null);
   };
 
   return (
@@ -83,25 +112,124 @@ export default function NewQuizForm() {
             </option>
           ))}
         </select>
+
+        {/* 🔹 Random order toggle */}
+        <label className="random-order-toggle">
+          <input
+            type="checkbox"
+            checked={randomOrder}
+            onChange={() => setRandomOrder(!randomOrder)}
+          />
+          Randomize card order
+        </label>
+
         {cards.map((card, index) => (
           <div key={index} className="card-front-back">
-            <input
-              id={`card-front-${index}`}
-              value={cards[index].front}
-              onChange={(e) =>
-                updateCardState(index, "front", e.currentTarget.value)
-              }
-              placeholder="Front"
-            />
+            <h3>Card {index + 1}</h3>
 
-            <input
-              id={`card-back-${index}`}
-              value={cards[index].back}
-              onChange={(e) =>
-                updateCardState(index, "back", e.currentTarget.value)
-              }
-              placeholder="Back"
-            />
+            <div className="card-side">
+              <label>Front Side:</label>
+              <input
+                id={`card-front-${index}`}
+                value={cards[index].front}
+                onChange={(e) =>
+                  updateCardState(index, "front", e.currentTarget.value)
+                }
+                placeholder="Front text"
+              />
+
+              <div className="image-input-container">
+                <input
+                  id={`card-front-image-${index}`}
+                  value={cards[index].frontImage}
+                  onChange={(e) =>
+                    updateCardState(index, "frontImage", e.currentTarget.value)
+                  }
+                  placeholder="Front image URL (optional)"
+                  type="url"
+                />
+                <span className="or-text">OR</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) =>
+                    handleFileUpload(index, "front", e.target.files[0])
+                  }
+                  className="file-input"
+                />
+                {cards[index].frontImage && (
+                  <button
+                    type="button"
+                    onClick={() => clearImage(index, "front")}
+                    className="clear-image-btn"
+                  >
+                    Clear Image
+                  </button>
+                )}
+              </div>
+
+              {cards[index].frontImage && (
+                <div className="image-preview">
+                  <img
+                    src={cards[index].frontImage}
+                    alt="Front preview"
+                    className="preview-image"
+                  />
+                </div>
+              )}
+            </div>
+
+            <div className="card-side">
+              <label>Back Side:</label>
+              <input
+                id={`card-back-${index}`}
+                value={cards[index].back}
+                onChange={(e) =>
+                  updateCardState(index, "back", e.currentTarget.value)
+                }
+                placeholder="Back text"
+              />
+
+              <div className="image-input-container">
+                <input
+                  id={`card-back-image-${index}`}
+                  value={cards[index].backImage}
+                  onChange={(e) =>
+                    updateCardState(index, "backImage", e.currentTarget.value)
+                  }
+                  placeholder="Back image URL (optional)"
+                  type="url"
+                />
+                <span className="or-text">OR</span>
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) =>
+                    handleFileUpload(index, "back", e.target.files[0])
+                  }
+                  className="file-input"
+                />
+                {cards[index].backImage && (
+                  <button
+                    type="button"
+                    onClick={() => clearImage(index, "back")}
+                    className="clear-image-btn"
+                  >
+                    Clear Image
+                  </button>
+                )}
+              </div>
+
+              {cards[index].backImage && (
+                <div className="image-preview">
+                  <img
+                    src={cards[index].backImage}
+                    alt="Back preview"
+                    className="preview-image"
+                  />
+                </div>
+              )}
+            </div>
 
             <button
               onClick={(e) => removeCard(e, index)}
@@ -118,4 +246,4 @@ export default function NewQuizForm() {
       </form>
     </section>
   );
-};
+}

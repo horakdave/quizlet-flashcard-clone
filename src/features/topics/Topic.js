@@ -3,6 +3,7 @@ import ROUTES from "../../app/routes";
 import { useSelector } from "react-redux";
 import { selectAllTopics } from "./topicsSlice";
 import { selectAllQuizzes } from "../quizzes/quizzesSlice";
+import QuizCard from "../quizzes/QuizCard";
 
 export default function Topic() {
   const topics = useSelector(selectAllTopics); // a call to the selector to select all the topics in state
@@ -17,9 +18,7 @@ export default function Topic() {
       <h1>Topic: {topic.name}</h1>
       <ul className="quizzes-list">
         {quizzesForTopic.map((quiz) => (
-          <li className="quiz" key={quiz.id}>
-            <Link to={ROUTES.quizRoute(quiz.id)}>{quiz.name}</Link>
-          </li>
+          <QuizCard key={quiz.id} quiz={quiz} />
         ))}
       </ul>
       <Link to="/quizzes/new" className="button center">

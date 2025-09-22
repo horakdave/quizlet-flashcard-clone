@@ -12,11 +12,15 @@ import Topics from "../features/topics/Topics";
 import Topic from "../features/topics/Topic";
 import Quiz from "../features/quizzes/Quiz";
 import Quizzes from "../features/quizzes/Quizzes";
+import DebugInfo from "../components/DebugInfo";
+import OfflineIndicator from "../components/OfflineIndicator";
 import ROUTES from "./routes";
 
 export default function App() {
   return (
     <Router>
+      <OfflineIndicator />
+      <DebugInfo />
       <nav>
         <ul>
           <li>

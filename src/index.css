@@ -14,32 +14,776 @@ code {
 
 ul {
   list-style: none;
+  padding: 0;
+  margin: 0;
 }
 
+/* Navigation - Mobile First */
+nav {
+  background: #333;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+}
+
+nav li {
+  flex: 1;
+  min-width: 120px;
+}
+
+nav a {
+  display: block;
+  padding: 15px 10px;
+  color: white;
+  text-decoration: none;
+  text-align: center;
+  font-weight: 500;
+  transition: background-color 0.3s;
+  border-bottom: 3px solid transparent;
+}
+
+nav a:hover,
+nav a.active {
+  background-color: #555;
+  border-bottom-color: #007bff;
+}
+
+/* Topics and Quizzes Lists - Mobile Responsive */
 .topics-list,
 .quizzes-list {
   display: flex;
   flex-wrap: wrap;
+  gap: 15px;
+  padding: 20px;
+  justify-content: center;
 }
 
 .topic,
 .quiz {
-  width: 200px;
+  width: 280px;
   height: 200px;
-  background: gray;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin-right: 20px;
-  margin-top: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.topic:hover,
+.quiz:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.topic-icon {
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+  filter: brightness(0) invert(1);
+}
+
+/* Cards - Mobile Optimized */
+.cards-list {
+  padding: 20px;
+  max-width: 600px;
+  margin: 0 auto;
 }
 
 .card {
-  width: 500px;
-  height: 250px;
-  background: gray;
+  width: 100%;
+  max-width: 500px;
+  min-height: 250px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
   margin: 20px auto;
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 15px;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  touch-action: manipulation;
+  user-select: none;
+  -webkit-user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.card:active {
+  transform: scale(0.98);
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding: 20px;
+  text-align: center;
+}
+
+.card-image {
+  max-width: 200px;
+  max-height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card-text {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+  line-height: 1.4;
+  word-wrap: break-word;
+  hyphens: auto;
+}
+
+/* Forms - Mobile Friendly */
+section {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+h1 {
+  text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+  font-size: 28px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  font-size: 16px;
+  transition: border-color 0.3s;
+  box-sizing: border-box;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 0 3px rgba(0,123,255,0.1);
+}
+
+button {
+  padding: 15px 25px;
+  background: #007bff;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  touch-action: manipulation;
+  min-height: 50px;
+}
+
+button:hover {
+  background: #0056b3;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+.actions-container {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Card Form Specific Styles */
+.card-front-back {
+  border: 2px solid #e9ecef;
+  padding: 20px;
+  margin: 15px 0;
+  border-radius: 12px;
+  background: #f8f9fa;
+}
+
+.card-front-back h3 {
+  margin-top: 0;
+  color: #495057;
+  text-align: center;
+}
+
+.card-side {
+  margin: 20px 0;
+}
+
+.card-side label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* File upload styles */
+.image-input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+
+.or-text {
+  font-weight: bold;
+  color: #666;
+  font-size: 14px;
+  margin: 0 5px;
+}
+
+.file-input {
+  padding: 10px !important;
+  border: 2px dashed #ccc !important;
+  background-color: #f9f9f9;
+  cursor: pointer;
+  transition: border-color 0.3s;
+  flex: 1;
+  min-width: 200px;
+}
+
+.file-input:hover {
+  border-color: #007bff !important;
+}
+
+.file-input::-webkit-file-upload-button {
+  background: #007bff;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+.clear-image-btn {
+  background: #dc3545;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.clear-image-btn:hover {
+  background: #c82333;
+}
+
+.image-preview {
+  margin-top: 15px;
+  text-align: center;
+}
+
+.preview-image {
+  max-width: 150px;
+  max-height: 100px;
+  object-fit: contain;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.remove-card-button {
+  background: #dc3545;
+  margin-top: 15px;
+  width: 100%;
+}
+
+.remove-card-button:hover {
+  background: #c82333;
+}
+
+/* Debug Info - Mobile */
+.debug-info {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background: rgba(240, 240, 240, 0.95);
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 12px;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+}
+
+/* Mobile Specific Styles */
+@media (max-width: 768px) {
+  nav ul {
+    flex-direction: column;
+  }
+  
+  nav li {
+    flex: none;
+    min-width: auto;
+  }
+  
+  nav a {
+    padding: 20px 10px;
+    font-size: 18px;
+  }
+  
+  .topics-list,
+  .quizzes-list {
+    padding: 15px;
+    gap: 10px;
+  }
+  
+  .topic,
+  .quiz {
+    width: 100%;
+    max-width: 300px;
+    height: 180px;
+  }
+  
+  .cards-list {
+    padding: 15px;
+  }
+  
+  .card {
+    min-height: 200px;
+    margin: 15px 0;
+  }
+  
+  .card-text {
+    font-size: 16px;
+  }
+  
+  section {
+    padding: 15px;
+  }
+  
+  h1 {
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  .image-input-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  
+  .file-input {
+    min-width: auto;
+  }
+  
+  .or-text {
+    text-align: center;
+    margin: 10px 0;
+  }
+  
+  .actions-container {
+    flex-direction: column;
+  }
+  
+  .debug-info {
+    position: relative;
+    top: auto;
+    right: auto;
+    margin: 10px;
+    background: #f8f9fa;
+  }
+}
+
+@media (max-width: 480px) {
+  .card {
+    min-height: 180px;
+  }
+  
+  .card-text {
+    font-size: 14px;
+  }
+  
+  .card-image {
+    max-width: 150px;
+    max-height: 100px;
+  }
+  
+  .quiz-card {
+    width: 100%;
+    max-width: 300px;
+  }
+  
+  input, select, textarea {
+    padding: 12px;
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+  
+  button {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
+}
+
+/* Touch-friendly improvements */
+@media (hover: none) and (pointer: coarse) {
+  .card:hover {
+    transform: none;
+  }
+  
+  .topic:hover,
+  .quiz:hover {
+    transform: none;
+  }
+  
+  .quiz-card:hover {
+    transform: none;
+  }
+  
+  .delete-quiz-btn {
+    background: rgba(220, 53, 69, 0.6);
+  }
+  
+  button:hover {
+    background: #007bff;
+  }
+  
+  .clear-image-btn:hover {
+    background: #dc3545;
+  }
+  
+  .remove-card-button:hover {
+    background: #dc3545;
+  }
+}
+
+/* Prevent text selection on interactive elements */
+.card, button, nav a {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* Improved focus styles for accessibility */
+button:focus,
+input:focus,
+select:focus,
+nav a:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Loading states */
+.loading {
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card, .topic, .quiz {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* Offline indicator */
+.offline-indicator {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background: #ffc107;
+  color: #000;
+  padding: 10px;
+  text-align: center;
+  z-index: 9999;
+  font-size: 14px;
+  font-weight: bold;
+  animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+/* Adjust body when offline indicator is shown */
+body.offline {
+  padding-top: 50px;
+}
+
+/* PWA install prompt */
+.install-prompt {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: #007bff;
+  color: white;
+  padding: 15px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 1000;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+}
+
+.install-prompt button {
+  background: white;
+  color: #007bff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Quiz Card with Delete Button */
+.quiz-card {
+  position: relative;
+  width: 280px;
+  height: 200px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  transition: transform 0.3s, box-shadow 0.3s;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+  display: flex;
+  overflow: hidden;
+}
+
+.quiz-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+}
+
+.quiz-link {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 20px;
+}
+
+.quiz-content {
+  text-align: center;
+}
+
+.quiz-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.quiz-content p {
+  margin: 0;
+  font-size: 14px;
+  opacity: 0.9;
+}
+
+.delete-quiz-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 50%;
+  width: 35px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, transform 0.2s;
+  backdrop-filter: blur(10px);
+}
+
+.delete-quiz-btn:hover {
+  background: rgba(220, 53, 69, 0.8);
+  transform: scale(1.1);
+}
+
+.delete-quiz-btn:active {
+  transform: scale(0.95);
+}
+
+/* Ensure navigation is always visible */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: #333;
+}
+
+/* Adjust body padding when offline indicator is shown */
+body.offline {
+  padding-bottom: 80px;
+}
+
+/* Debug info positioning adjustments */
+.debug-container {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 1000;
+}
+
+/* Mobile adjustments for debug and offline indicators */
+@media (max-width: 768px) {
+  .debug-container {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+  }
+  
+  .offline-indicator {
+    bottom: 10px !important;
+    left: 10px !important;
+    right: 10px !important;
+  }
+}
+
+/* Mobile responsive image sizing */
+@media (max-width: 768px) {
+  .topic-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .card-image {
+    width: 150px;
+    height: 100px;
+  }
+  
+  .preview-image {
+    width: 120px;
+    height: 80px;
+  }
+}
+
+@media (max-width: 480px) {
+  .topic-icon {
+    width: 50px;
+    height: 50px;
+  }
+  
+  .card-image {
+    width: 120px;
+    height: 80px;
+  }
+  
+  .preview-image {
+    width: 100px;
+    height: 70px;
+  }
+}
+
+/* Add this at the very end to force all images to be constrained */
+
+/* Force all images to respect their container sizes */
+img {
+  max-width: 100% !important;
+  max-height: 100% !important;
+  object-fit: cover !important;
+}
+
+/* Specific overrides for different image types */
+.card-image img {
+  width: 200px;
+  height: 150px;
+  object-fit: cover;
+}
+
+.preview-image {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+}
+
+.topic-icon {
+  width: 80px;
+  height: 80px;
+  object-fit: contain; /* icons usually shouldn't be cropped */
+}
+/* Mobile overrides */
+@media (max-width: 768px) {
+  .card-image img {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .preview-image {
+    width: 120px !important;
+    height: 80px !important;
+  }
+  
+  .topic-icon {
+    width: 60px !important;
+    height: 60px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .card-image img {
+    width: 100% !important;
+    height: 100% !important;
+  }
+  
+  .preview-image {
+    width: 100px !important;
+    height: 70px !important;
+  }
+  
+  .topic-icon {
+    width: 50px !important;
+    height: 50px !important;
+  }
 }
